@@ -1,5 +1,7 @@
 # EVRY FS python ASGI base image
 
+[![Docker Repository on Quay](https://quay.io/repository/evryfs/base-python-asgi/status "Docker Repository on Quay")](https://quay.io/repository/evryfs/base-python-asgi)
+
 This image forms the basis for running python ASGI applications. It is based on
 the EVRY python base image and uses uvicorn.
 
