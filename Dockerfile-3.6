@@ -24,7 +24,7 @@ USER root
 RUN apt-get update && \
     apt-get install -y gcc
 RUN pip install uvicorn==$UVICORN_VERSION
-RUN apt-get purge -y gcc
+RUN apt-get purge -y gcc && rm /var/lib/apt/lists/*
 COPY start_uvicorn /bin/
 COPY asgi.py /usr/local/lib/python3.6/site-packages/
 RUN chmod 755 /bin/start_uvicorn
