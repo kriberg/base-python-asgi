@@ -1,0 +1,2 @@
+#!/bin/bash
+uvicorn --port $UVICORN_PORT --host $UVICORN_HOST $*
