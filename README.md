@@ -24,7 +24,7 @@ Dockerfile based on this. Then add your python sauce to the container and set
 the name of the ASGI module with `CMD ["module:callable"]`.
 
 ```dockerfile
-FROM evryfs/base-python-asgi:3.7-stable
+FROM quay.io/evryfs/base-python-asgi:3.7-stable
 ARG BUILD_DATE
 ARG BUILD_URL
 ARG GIT_URL
