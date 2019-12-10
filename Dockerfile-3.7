@@ -33,6 +33,6 @@ USER 1001:100
 WORKDIR /app
 EXPOSE $UVICORN_PORT
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-    CMD curl -X HEAD --silent --fail "http://localhost:$UVICORN_PORT/" || exit 1
+    CMD curl -I --silent --fail "http://localhost:$UVICORN_PORT/" || exit 1
 ENTRYPOINT ["/bin/start_uvicorn"]
 CMD ["asgi:app"]
