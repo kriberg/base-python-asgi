@@ -8,7 +8,7 @@ GIT_COMMIT := $(shell git rev-parse HEAD)
 
 3.8 3.7 3.6:
 	@echo "Building base-python-asgi with uvicorn $(UVICORN_VERSION) and python $@"
-	echo "FROM $(BASE_IMAGE):$@" | cat < Dockerfile | docker build . \
+	docker build . \
 		-t evryfs/base-python-asgi:$@-$(UVICORN_VERSION) \
 		-t evryfs/base-python-asgi:$@-stable \
 		-t quay.io/evryfs/base-python-asgi:$@-$(UVICORN_VERSION) \
@@ -19,7 +19,7 @@ GIT_COMMIT := $(shell git rev-parse HEAD)
 		--build-arg GIT_URL="$(GIT_URL)" \
 		--build-arg GIT_COMMIT="$(GIT_COMMIT)" \
 		--build-arg PY_VER="$@" \
-		-f-
+		-f Dockerfile-$@
 	docker push quay.io/evryfs/base-python-asgi:$@-stable
 	docker push quay.io/evryfs/base-python-asgi:$@-$(UVICORN_VERSION)
 
