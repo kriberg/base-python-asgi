@@ -1,2 +1,2 @@
 #!/bin/bash
-uvicorn --port $UVICORN_PORT --host $UVICORN_HOST $*
+uvicorn --port $UVICORN_PORT --host $UVICORN_HOST --log-level ${LOG_LEVEL:-info} $*
