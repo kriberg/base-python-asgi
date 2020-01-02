@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-UVICORN_VERSION = 0.10.8
+UVICORN_VERSION = 0.11.1
 BASE_IMAGE = quay.io/evryfs/base-python
 BUILD_URL ?= $(shell pwd)
 BUILD_DATE ?= $(shell date --rfc-3339=ns)
