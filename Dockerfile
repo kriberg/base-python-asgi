@@ -1,10 +1,12 @@
-FROM quay.io/evryfs/base-python:3.8
-ARG UVICORN_VERSION=0.10.8
+FROM quay.io/evryfs/base-python:3.9
 ARG BUILD_DATE
 ARG BUILD_URL
 ARG GIT_URL
 ARG GIT_COMMIT
 ARG PY_VER
+ARG UVICORN_VERSION
+ARG GUNICORN_VERSION
+ARG VERSION
 LABEL maintainer="Kristian Berg <kristian.berg@evry.com>" \
       org.opencontainers.image.title="base-python-asgi" \
       org.opencontainers.image.created=$BUILD_DATE \
@@ -12,19 +14,21 @@ LABEL maintainer="Kristian Berg <kristian.berg@evry.com>" \
       org.opencontainers.image.url=$BUILD_URL \
       org.opencontainers.image.documentation="https://github.com/evryfs/base-python-asgi/" \
       org.opencontainers.image.source=$GIT_URL \
-      org.opencontainers.image.version=$PY_VER-$UVICORN_VERSION \
+      org.opencontainers.image.version=$VERSION \
       org.opencontainers.image.revision=$GIT_COMMIT \
       org.opencontainers.image.vendor="EVRY Financial Services" \
       org.opencontainers.image.licenses="proprietary-license" \
-      org.opencontainers.image.description="Base image for python $PY_VER with uvicorn ASGI server"
+      org.opencontainers.image.description="Base image for ASGI apps using python $PY_VER with uvicorn $UVICORN_VERSION and gunicorn $GUNICORN_VERSION"
 
 ENV UVICORN_PORT 8000
 ENV UVICORN_HOST 0.0.0.0
 USER root
 RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y gcc
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends curl
-RUN pip install uvicorn==$UVICORN_VERSION
+    apt-get install -y gcc && \
+    apt-get -y clean && \
+    rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 RUN apt-get purge -y gcc && rm -rf /var/lib/apt/lists/*
 COPY start_uvicorn /bin/
 COPY asgi.py /usr/local/lib/python$PY_VER/site-packages/
