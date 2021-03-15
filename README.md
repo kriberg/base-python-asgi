@@ -14,8 +14,9 @@ environment flags to control how the ASGI application is started.
 
 Flag             | Default           | Comment 
 ---------------- | ----------------- | ---------------------------------------------------
-UVICORN_PORT	 | 8000              | Application port.
+UVICORN_PORT     | 8000              | Application port.
 UVICORN_HOST     | 0.0.0.0           | Application bind address.
+CONTEXT_ROOT     | None              | Context root where application is served.
 
 ### Creating a Dockerfile
 

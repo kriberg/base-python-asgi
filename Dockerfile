@@ -22,6 +22,7 @@ LABEL maintainer="Kristian Berg <kristian.berg@evry.com>" \
 
 ENV UVICORN_PORT 8000
 ENV UVICORN_HOST 0.0.0.0
+ENV CONTEXT_ROOT ""
 USER root
 RUN apt-get update && \
     apt-get install -y gcc && \
@@ -37,6 +38,6 @@ USER 1001:100
 WORKDIR /app
 EXPOSE $UVICORN_PORT
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-    CMD curl -I --silent --fail "http://localhost:$UVICORN_PORT/" || exit 1
+    CMD curl -I --silent --fail "http://localhost:$UVICORN_PORT/$CONTEXT_ROOT" || exit 1
 ENTRYPOINT ["/bin/start_uvicorn"]
 CMD ["asgi:app"]
