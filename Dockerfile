@@ -32,7 +32,6 @@ COPY requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 RUN apt-get purge -y gcc && rm -rf /var/lib/apt/lists/*
 COPY start_uvicorn /bin/
-COPY asgi.py /usr/local/lib/python$PY_VER/site-packages/
 RUN chmod 755 /bin/start_uvicorn
 USER 1001:100
 WORKDIR /app
@@ -40,4 +39,3 @@ EXPOSE $UVICORN_PORT
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
     CMD curl -I --silent --fail "http://localhost:$UVICORN_PORT/$CONTEXT_ROOT" || exit 1
 ENTRYPOINT ["/bin/start_uvicorn"]
-CMD ["asgi:app"]
